@@ -21,7 +21,7 @@ const Signup = () => {
   const kakshaPrimaryGreen = "#3d6e39"; // Dark green from logo
   const kakshaSecondaryGreen = "#4d8a48"; // Lighter green for gradient
   const kakshaLightText = "#f5f5f0"; // Off-white text color
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   
   // Add responsive hooks
   const theme = useTheme();
@@ -36,6 +36,7 @@ const Signup = () => {
       preserveAspectRatio: 'xMidYMid slice'
     }
   };
+  
   const handleSigninClick = () => {
     navigate("/login");
   };
@@ -54,10 +55,37 @@ const Signup = () => {
         overflow: "hidden",
         transform: "scale(1)",
         transition: "transform 0.3s ease",
+        position: "relative", // Add relative positioning for absolute logo
         "&:hover": {
           transform: "scale(1.01)"
         }
       }}>
+        {/* Logo in top right corner - only visible on desktop */}
+        {!isMobile && (
+          <Box
+            sx={{
+              position: "absolute",
+              top: 16,
+              right: 16,
+              zIndex: 10,
+              display: { xs: "none", md: "flex" },
+              flexDirection: "column",
+              alignItems: "center"
+            }}
+          >
+            <Box
+              component="img"
+              src={logo}
+              alt="Kaksha Logo"
+              sx={{
+                width: 100,
+                height: "auto",
+                mb: 1
+              }}
+            />
+          </Box>
+        )}
+        
         {/* Left Panel - Animation and branding */}
         <Grid 
           item 
@@ -73,24 +101,27 @@ const Signup = () => {
             color: kakshaLightText
           }}
         >
-          <Box sx={{ width: "100px", mt: { xs: 2, md: 5 }, mb: 3 }}>
-            {/* Logo from the image you provided earlier */}
-            <img 
-              src={logo}
-              alt="Kaksha Logo" 
-              style={{ width: "100%", height: "auto" }}
-            />
-          </Box>
+          {/* Show logo on mobile at the top of the left panel */}
+          {isMobile && (
+            <Box sx={{ width: "100px", mb: 3 }}>
+              <img 
+                src={logo}
+                alt="Kaksha Logo" 
+                style={{ width: "100%", height: "auto" }}
+              />
+            </Box>
+          )}
           
           <Box sx={{ 
             width: "100%", 
             height: { xs: "180px", md: "250px" }, 
             display: "flex", 
-            justifyContent: "center" 
+            justifyContent: "center",
+            mt: { xs: 0, md: 8 } // Add more top margin on desktop to account for logo
           }}>
             <Lottie 
               options={defaultOptions} 
-              height={isMobile ? 180 : 250} 
+              height={isMobile ? 180 : 350} 
               width={isMobile ? 180 : 250} 
             />
           </Box>
@@ -111,7 +142,8 @@ const Signup = () => {
             sx={{ 
               display: "flex", 
               flexDirection: "column",
-              p: { xs: 3, md: 5 }
+              p: { xs: 3, md: 5 },
+              pt: { md: 8 } // Add more top padding on desktop to account for logo
             }}
           >
             <Typography variant="h4" sx={{ fontFamily: "serif", fontWeight: "bold", color: kakshaPrimaryGreen, mb: 0.5 }}>
@@ -299,7 +331,7 @@ const Signup = () => {
             <Typography variant="body2" sx={{ textAlign: "center", mt: 2 }}>
               Already have an account?{" "}
               <Button 
-              onClick={handleSigninClick}
+                onClick={handleSigninClick}
                 component="span" 
                 sx={{ 
                   color: kakshaPrimaryGreen, 
