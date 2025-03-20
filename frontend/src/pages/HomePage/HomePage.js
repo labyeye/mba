@@ -164,13 +164,13 @@ const HomePage = () => {
             <Grid item xs={12} md={6} sx={{ textAlign: 'center' }}>
               <Box sx={{ 
                 width: "100%", 
-                height: { xs: "250px", md: "350px" }, 
+                height: { xs: "250px", md: "430px" }, 
                 display: "flex", 
                 justifyContent: "center"
               }}>
                 <Lottie 
                   options={defaultOptions} 
-                  height={isMobile ? 250 : 350} 
+                  height={isMobile ? 250 : 430} 
                   width={isMobile ? 250 : 350} 
                 />
               </Box>
